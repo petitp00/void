@@ -2,8 +2,8 @@
 layout(location = 0) out vec4 color;
 in vec2 TexCoords;
 
-uniform sampler2D text;
 uniform vec3 textColor;
+uniform sampler2D text;
 
 void main()
 {

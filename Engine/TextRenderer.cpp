@@ -5,12 +5,12 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-TextRenderer::TextRenderer(glm::vec2 framebuffer_size, cstr font_filename, uint font_size, cstr fonts_folder)
+TextRenderer::TextRenderer(glm::vec2 framebuffer_size, std::string font_filename, uint font_size, std::string fonts_folder)
 {
 	Init(framebuffer_size, font_filename, font_size, fonts_folder);
 }
 
-void TextRenderer::Init(glm::vec2 framebuffer_size, cstr font_filename, uint font_size, cstr fonts_folder)
+void TextRenderer::Init(glm::vec2 framebuffer_size, std::string font_filename, uint font_size, std::string fonts_folder)
 {
 	this->framebuffer_size = framebuffer_size;
 
@@ -45,8 +45,7 @@ void TextRenderer::Init(glm::vec2 framebuffer_size, cstr font_filename, uint fon
 	glGenTextures(1, &fbo_texture);
 	glBindTexture(GL_TEXTURE_2D, fbo_texture);
 	// create an empty image
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1024, 1024, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, framebuffer_size.x, framebuffer_size.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1024, 1024, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 

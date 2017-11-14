@@ -2,20 +2,22 @@
 #include "Shader.h"
 #include "ConsoleColors.h"
 
-Shader::Shader(cstr shader_name, cstr root, cstr vertex_extension, cstr fragment_extension)
+Shader::Shader(std::string shader_name, std::string root, std::string vertex_extension, std::string fragment_extension)
 {
 	Init(shader_name, root, vertex_extension, fragment_extension);
 }
 
-void Shader::Init(cstr shader_name, cstr root, cstr vertex_extension, cstr fragment_extension)
+void Shader::Init(std::string shader_name, std::string root, std::string vertex_extension, std::string fragment_extension)
 {
+	this->shader_name = shader_name;
+
 	std::string vertex_code, fragment_code;
 	std::ifstream vfile, ffile;
 	vfile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	ffile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	try {
-		vfile.open(std::string(root) + shader_name + vertex_extension);
-		ffile.open(std::string(root) + shader_name + fragment_extension);
+		vfile.open(root + shader_name + vertex_extension);
+		ffile.open(root + shader_name + fragment_extension);
 		std::stringstream vss, fss;
 		vss << vfile.rdbuf();
 		fss << ffile.rdbuf();
@@ -26,7 +28,7 @@ void Shader::Init(cstr shader_name, cstr root, cstr vertex_extension, cstr fragm
 	}
 	catch (std::ifstream::failure e) {
 		print_red("ERROR: shader file could not be read");
-		print_red((std::string(root) + std::string(shader_name)).c_str());
+		print_red((root + shader_name).c_str());
 	}
 	cstr vert_code = vertex_code.c_str();
 	cstr frag_code = fragment_code.c_str();
@@ -64,25 +66,46 @@ void Shader::Use()
 }
 
 void Shader::setBool(cstr name, bool value) {
-	glUniform1i(glGetUniformLocation(id, name), (int)value);
+	int loc = glGetUniformLocation(id, name);
+	if (loc == -1)
+		std::cout << red << "Location of uniform " << yellow << name << red << " was not found in shader "<< yellow << shader_name << '\n' << white;
+	glUniform1i(loc, (int)value);
 }
 void Shader::setInt(cstr name, int value) {
-	glUniform1i(glGetUniformLocation(id, name), value);
+	int loc = glGetUniformLocation(id, name);
+	if (loc == -1)
+		std::cout << red << "Location of uniform " << yellow << name << red << " was not found in shader "<< yellow << shader_name << '\n' << white;
+	glUniform1i(loc, value);
 }
 void Shader::setFloat(cstr name, float value) {
-	glUniform1f(glGetUniformLocation(id, name), value);
+	int loc = glGetUniformLocation(id, name);
+	if (loc == -1)
+		std::cout << red << "Location of uniform " << yellow << name << red << " was not found in shader "<< yellow << shader_name << '\n' << white;
+	glUniform1f(loc, value);
 }
 void Shader::setVec2(cstr name, glm::vec2 value) {
-	glUniform2f(glGetUniformLocation(id, name), value.x, value.y);
+	int loc = glGetUniformLocation(id, name);
+	if (loc == -1)
+		std::cout << red << "Location of uniform " << yellow << name << red << " was not found in shader "<< yellow << shader_name << '\n' << white;
+	glUniform2f(loc, value.x, value.y);
 }
 void Shader::setVec3(cstr name, glm::vec3 value) {
-	glUniform3f(glGetUniformLocation(id, name), value.x, value.y, value.z);
+	int loc = glGetUniformLocation(id, name);
+	if (loc == -1)
+		std::cout << red << "Location of uniform " << yellow << name << red << " was not found in shader "<< yellow << shader_name << '\n' << white;
+	glUniform3f(loc, value.x, value.y, value.z);
 }
 void Shader::setVec4(cstr name, glm::vec4 value) {
-	glUniform4f(glGetUniformLocation(id, name), value.r, value.g, value.b, value.a);
+	int loc = glGetUniformLocation(id, name);
+	if (loc == -1)
+		std::cout << red << "Location of uniform " << yellow << name << red << " was not found in shader "<< yellow << shader_name << '\n' << white;
+	glUniform4f(loc, value.r, value.g, value.b, value.a);
 }
 void Shader::setMat4(cstr name, glm::mat4 value) {
-	glUniformMatrix4fv(glGetUniformLocation(id, name), 1, GL_FALSE, &value[0][0]);
+	int loc = glGetUniformLocation(id, name);
+	if (loc == -1)
+		std::cout << red << "Location of uniform " << yellow << name << red << " was not found in shader "<< yellow << shader_name << '\n' << white;
+	glUniformMatrix4fv(loc, 1, GL_FALSE, &value[0][0]);
 }
 
 void Shader::CheckCompileErrors(uint shader, std::string type)

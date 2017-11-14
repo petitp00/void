@@ -22,8 +22,8 @@ class TextRenderer
 {
 public:
 	TextRenderer()=default;
-	TextRenderer(glm::vec2 framebuffer_size, cstr font_filename, uint font_size, cstr fonts_folder = "../Resources/Fonts/");
-	void Init(glm::vec2 framebuffer_size, cstr font_filename, uint font_size, cstr fonts_folder = "../Resources/Fonts/");
+	TextRenderer(glm::vec2 framebuffer_size, std::string font_filename, uint font_size, std::string fonts_folder = RESOURCES_FOLDER + "Fonts/");
+	void Init(glm::vec2 framebuffer_size, std::string font_filename, uint font_size, std::string fonts_folder = RESOURCES_FOLDER + "Fonts/");
 	void ChangeFrameBufferSize(glm::vec2 new_size);
 	void RenderText(std::string text, glm::vec2 pos, float scale, glm::vec3 color = glm::vec3(0.f));
 	void RenderTextToWorld(std::string text, glm::vec3 pos, float scale, glm::vec3 color, TextToWorldRenderInfo ttwri);

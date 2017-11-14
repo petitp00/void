@@ -10,6 +10,9 @@ using cstr = const char*;
 // Constants
 extern const float M_PI;
 
+// Variables
+extern std::string RESOURCES_FOLDER;
+
 // Functions
 std::ostream& operator<<(std::ostream& os, const glm::vec2 v);
 std::ostream& operator<<(std::ostream& os, const glm::ivec2 v);

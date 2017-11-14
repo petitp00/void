@@ -6,14 +6,14 @@ class Shader
 {
 public:
 	Shader()=default;
-	Shader(cstr shader_name,
-		cstr root = "../Resources/Shaders/",
-		cstr vertex_extension = ".vert",
-		cstr fragment_extension = ".frag");
-	void Init(cstr shader_name,
-		cstr root = "../Resources/Shaders/",
-		cstr vertex_extension = ".vert",
-		cstr fragment_extension = ".frag");
+	Shader(std::string shader_name,
+		std::string root = RESOURCES_FOLDER + "Shaders/",
+		std::string vertex_extension = ".vert",
+		std::string fragment_extension = ".frag");
+	void Init(std::string shader_name,
+		std::string root = RESOURCES_FOLDER + "Shaders/",
+		std::string vertex_extension = ".vert",
+		std::string fragment_extension = ".frag");
 
 	void Use();
 
@@ -30,4 +30,5 @@ public:
 private:
 	void CheckCompileErrors(uint shader, std::string type);
 	bool ready_to_use = false; // is set to true in init
+	std::string shader_name;
 };

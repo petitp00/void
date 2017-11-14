@@ -25,6 +25,7 @@ struct RenderInfo {
 	glm::mat4 view;
 	glm::vec3 view_pos;
 	LightInfo light;
+	glm::ivec2 framebuffer_size;
 };
 
 struct Cube {
@@ -44,12 +45,16 @@ class CubeMesh
 {
 public:
 	CubeMesh() = delete;
-	static void Init();
+	static void Init(glm::ivec2 framebuffer_size);
 	static void DrawCubes(std::vector<Cube> cubes, RenderInfo info);
 	static void DrawHalfCubes(std::vector<HalfCube> hcubes, RenderInfo info);
 
+	static void DrawCubesDeferred(std::vector<Cube> cubes, RenderInfo info);
+
 private:
-	static uint vao_cube, vao_hcube;
-	static Shader shader;
+	static uint gbuf;
+	static uint gpos, gnorm;
+	static uint vao_cube, vao_hcube, quad_vao;
+	static Shader shader, gbuf_shader, light_pass_shader;
 };
 

@@ -2,20 +2,20 @@
 #include "ObjParser.h"
 #include "ConsoleColors.h"
 
-ObjParser::ObjParser(cstr filename, cstr root_folder)
+ObjParser::ObjParser(std::string filename, std::string root_folder)
 {
 	ParseFile(filename, root_folder);
 }
 
-void ObjParser::ParseFile(cstr filename, cstr root_folder)
+void ObjParser::ParseFile(std::string filename, std::string root_folder)
 {
 	data.clear();
 	vertices_data.clear();
 
-	std::ifstream ss((std::string(root_folder) + filename).c_str());
+	std::ifstream ss(root_folder + filename);
 	if (!ss.is_open()) {
 		std::cout << red << "ERROR: ObjParser::ParseFile() failed to open file." << yellow <<
-			std::string(root_folder) + filename << white << '\n';
+			root_folder << filename << white << '\n';
 		return;
 	}
 
@@ -39,7 +39,7 @@ void ObjParser::ParseFile(cstr filename, cstr root_folder)
 		else if (w == "s") { // smooth shading. We only handle 'off' for now.
 			ss >> w;
 			if (w != "off") {
-				std::cout << red << "File " << yellow << std::string(root_folder) + filename
+				std::cout << red << "File " << yellow << root_folder << filename
 					<< red << " can't be parsed. (smooth shading must be off)" << white << '\n';
 				return;
 			}
