@@ -33,9 +33,6 @@
     <ClCompile Include="glad.c">
       <Filter>Other Files</Filter>
     </ClCompile>
-    <ClCompile Include="CubeMesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ObjParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -46,6 +43,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Collisions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,9 +68,6 @@
     <ClInclude Include="stdafx.h">
       <Filter>Other Files</Filter>
     </ClInclude>
-    <ClInclude Include="CubeMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ObjParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -81,6 +78,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Collisions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

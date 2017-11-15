@@ -163,7 +163,7 @@
   <ItemGroup>
     <ClCompile Include="..\Engine\Camera.cpp" />
     <ClCompile Include="..\Engine\Collisions.cpp" />
-    <ClCompile Include="..\Engine\CubeMesh.cpp" />
+    <ClCompile Include="..\Engine\CubeRenderer.cpp" />
     <ClCompile Include="..\Engine\glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>

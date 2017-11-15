@@ -213,10 +213,8 @@ namespace Collision {
 			if (b2.size.x >= b2.size.y) {
 				mtv_sat = glm::vec3(0, mtv_sat.y, 0);
 			}
-			std::cout << "mtv: " << mtv << " mtv_sat: " << mtv_sat << '\n';
 			if (glm::length(mtv_sat) < glm::length(mtv)) {
 				mtv = mtv_sat;
-				std::cout << mtv << '\n';
 			}
 		}
 		else {

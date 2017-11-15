@@ -41,20 +41,23 @@ struct HalfCube { // sometimes called hcube in code
 	CubeMaterial mat;
 };
 
-class CubeMesh
+class CubeRenderer
 {
 public:
-	CubeMesh() = delete;
+	CubeRenderer() = delete;
 	static void Init(glm::ivec2 framebuffer_size);
-	static void DrawCubes(std::vector<Cube> cubes, RenderInfo info);
-	static void DrawHalfCubes(std::vector<HalfCube> hcubes, RenderInfo info);
+	static void ChangeFramebuffer_size(glm::ivec2 frambuffer_size);
 
-	static void DrawCubesDeferred(std::vector<Cube> cubes, RenderInfo info);
+	static void AddCubesToDraw(std::vector<Cube> _cubes, std::vector<HalfCube> _hcubes);
+	static void RenderFrame(RenderInfo info); // clears cubes and hcubes
 
 private:
 	static uint gbuf;
 	static uint gpos, gnorm;
-	static uint vao_cube, vao_hcube, quad_vao;
-	static Shader shader, gbuf_shader, light_pass_shader;
+	static uint vao_cube, vao_hcube, vao_quad;
+	static Shader gbuf_shader, light_pass_shader;
+
+	static std::vector<Cube> cubes;
+	static std::vector<HalfCube> hcubes;
 };
 

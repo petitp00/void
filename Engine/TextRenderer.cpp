@@ -130,7 +130,7 @@ void TextRenderer::Init(glm::vec2 framebuffer_size, std::string font_filename, u
 	ready_to_render = true;
 }
 
-void TextRenderer::ChangeFrameBufferSize(glm::vec2 new_size)
+void TextRenderer::ChangeFramebufferSize(glm::vec2 new_size)
 {
 	framebuffer_size = new_size;
 	shader.Use();
