@@ -110,8 +110,9 @@ void CubeRenderer::Init(glm::ivec2 framebuffer_size)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void CubeRenderer::ChangeFramebuffer_size(glm::ivec2 frambuffer_size)
+void CubeRenderer::ChangeFramebufferSize(glm::ivec2 framebuffer_size)
 {
+	InitFramebuffer(framebuffer_size);
 }
 
 void CubeRenderer::AddCubesToDraw(std::vector<Cube> _cubes, std::vector<HalfCube> _hcubes)
@@ -183,6 +184,48 @@ void CubeRenderer::RenderFrame(RenderInfo info)
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
 	glBlitFramebuffer(0, 0, info.framebuffer_size.x, info.framebuffer_size.y, 0, 0, info.framebuffer_size.x, info.framebuffer_size.y, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void CubeRenderer::InitFramebuffer(glm::ivec2 framebuffer_size)
+{
+	if (gbuf != 0) {
+		glDeleteFramebuffers(1, &gbuf);
+		uint textures[] = { gpos, gnorm };
+		glDeleteTextures(2, textures);
+	}
+
+	// G Buffer
+	glGenFramebuffers(1, &gbuf);
+	glBindFramebuffer(GL_FRAMEBUFFER, gbuf);
+
+	glGenTextures(1, &gpos);
+	glBindTexture(GL_TEXTURE_2D, gpos);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, framebuffer_size.x, framebuffer_size.y, 0, GL_RGB, GL_FLOAT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gpos, 0);
+
+	glGenTextures(1, &gnorm);
+	glBindTexture(GL_TEXTURE_2D, gnorm);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, framebuffer_size.x, framebuffer_size.y, 0, GL_RGB, GL_FLOAT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gnorm, 0);
+
+	uint attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+	glDrawBuffers(2, attachments);
+	
+	uint rbo_depth;
+	glGenRenderbuffers(1, &rbo_depth);
+	glBindRenderbuffer(GL_RENDERBUFFER, rbo_depth);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, framebuffer_size.x, framebuffer_size.y);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rbo_depth);
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+		print_red("Framebuffer not complete!");
+	}
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 

@@ -9,7 +9,7 @@ Player::Player() : move_speed(1.0f), gravity_acceleration_constant(1.f), frictio
 	relative_eye_position = glm::vec3(0.f, size.y / 2.f - 0.1f, 0.f);
 }
 
-void Player::UpdateMovement(GLFWwindow * window, float dt, std::vector<Collision::Box> boxes, std::vector<Collision::HalfBox> hboxes, glm::vec3& start1, glm::vec3& end1, glm::vec3& start2, glm::vec3& end2)
+void Player::UpdateMovement(GLFWwindow * window, float dt, std::vector<Collision::Box> boxes, std::vector<Collision::HalfBox> hboxes)
 {
 	// todo: rewrite this function to work with configurable controls
 
@@ -57,7 +57,7 @@ void Player::UpdateMovement(GLFWwindow * window, float dt, std::vector<Collision
 		if (res.collision) mtv += res.mtv;
 	}
 	for (auto b : hboxes) {
-		auto res = Collision::Get(player_box, b, start1, end1, start2, end2);
+		auto res = Collision::Get(player_box, b);
 		if (res.collision) mtv += res.mtv;
 	}
 

@@ -7,7 +7,7 @@ class Player
 {
 public:
 	Player();
-	void UpdateMovement(GLFWwindow* window, float dt, std::vector<Collision::Box> boxes, std::vector<Collision::HalfBox> hboxes, glm::vec3& start1, glm::vec3& end1, glm::vec3& start2, glm::vec3& end2);
+	void UpdateMovement(GLFWwindow* window, float dt, std::vector<Collision::Box> boxes, std::vector<Collision::HalfBox> hboxes);
 	
 	Camera camera;
 

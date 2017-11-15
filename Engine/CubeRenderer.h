@@ -46,12 +46,14 @@ class CubeRenderer
 public:
 	CubeRenderer() = delete;
 	static void Init(glm::ivec2 framebuffer_size);
-	static void ChangeFramebuffer_size(glm::ivec2 frambuffer_size);
+	static void ChangeFramebufferSize(glm::ivec2 framebuffer_size);
 
 	static void AddCubesToDraw(std::vector<Cube> _cubes, std::vector<HalfCube> _hcubes);
 	static void RenderFrame(RenderInfo info); // clears cubes and hcubes
 
 private:
+	static void InitFramebuffer(glm::ivec2 framebuffer_size);
+
 	static uint gbuf;
 	static uint gpos, gnorm;
 	static uint vao_cube, vao_hcube, vao_quad;

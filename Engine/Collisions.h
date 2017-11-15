@@ -26,5 +26,5 @@ namespace Collision
 	};
 
 	Result Get(Box b1, Box b2);
-	Result Get(Box b1, HalfBox b2, glm::vec3& start1, glm::vec3& end1, glm::vec3& start2, glm::vec3& end2);
+	Result Get(Box b1, HalfBox b2);
 }

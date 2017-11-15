@@ -78,7 +78,8 @@ namespace Collision {
 		result.mtv = mtv;
 		return result;
 	}
-	Result Get(Box b1, HalfBox b2, glm::vec3& start1, glm::vec3& end1, glm::vec3& start2, glm::vec3& end2)
+
+	Result Get(Box b1, HalfBox b2)
 	{
 		Result result;
 		result.collision = false;
@@ -139,12 +140,6 @@ namespace Collision {
 		glm::mat4 r = glm::rotate(glm::mat4(), glm::radians(90.f * b2.rotation.x - 90.f * b2.rotation.y), glm::vec3(abs(b2.rotation.y), 0, abs(b2.rotation.x)));
 		glm::vec3 perp = glm::normalize(r * glm::vec4(slope, 1.f));
 
-		start1 = b2.position;
-		start2 = b2.position;
-		end1 = start1 + slope * 2.f;
-		end2 = start2 + perp * 2.f;
-
-		
 		float mina =  100000;
 		float maxa = -100000;
 		float minb =  100000;
