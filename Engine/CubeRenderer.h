@@ -49,7 +49,7 @@ public:
 	static void ChangeFramebufferSize(glm::ivec2 framebuffer_size);
 
 	static void AddCubesToDraw(std::vector<Cube> _cubes, std::vector<HalfCube> _hcubes);
-	static void RenderFrame(RenderInfo info); // clears cubes and hcubes
+	static void RenderFrame(RenderInfo info, uint fbo = 0); // clears cubes and hcubes
 
 private:
 	static void InitFramebuffers(glm::ivec2 framebuffer_size);
@@ -62,7 +62,7 @@ private:
 	// geometry pass
 	static Shader gbuf_shader;
 	static uint gbuf;
-	static uint gpos, gnorm; // output textures
+	static uint gpos, gnorm, gcolor; // output textures
 
 	// ssao pass
 	static Shader ssao_shader;

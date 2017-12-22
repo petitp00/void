@@ -24,6 +24,7 @@ struct Light {
 
 uniform sampler2D gPosition;
 uniform sampler2D gNormal;
+uniform sampler2D gColor;
 uniform sampler2D ssao;
 
 uniform Material mat;
@@ -31,10 +32,15 @@ uniform Light light;
 
 void main()
 {
+
+	vec4 color = texture(gColor, TexCoords);
+	//color = vec4(1,1,1,1);
+	
 	vec3 FragPos = /*viewPos -*/ texture(gPosition, TexCoords).rgb;
 	vec3 norm = normalize(texture(gNormal, TexCoords)).rgb;
 	float ssao_val = texture(ssao, TexCoords).r;
 	if (norm == vec3(0,0,0)) { discard; }
+	if (norm == vec3(normalize(vec4(1,1,1,1)))) { discard; }
 
 
 	vec3 light_dir;
@@ -45,13 +51,13 @@ void main()
 		//light_dir = normalize(-light.position);
 	}
 
-	vec3 ambient = light.ambient * mat.diffuse.rgb * ssao_val;
+	vec3 ambient = light.ambient * color.rgb * ssao_val;
 	//vec3 ambient = light.ambient * mat.diffuse.rgb;
 	vec3 lighting = ambient;
 	vec3 view_dir = normalize(-FragPos);
 
 	float diff = max(dot(norm, light_dir), 0.0);
-	vec3 diffuse = light.diffuse * diff * mat.diffuse.rgb;
+	vec3 diffuse = light.diffuse * diff * color.rgb;
 
 	vec3 reflect_dir = reflect(-light_dir, norm);	
 	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), mat.specular_strength);

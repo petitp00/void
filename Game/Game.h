@@ -23,6 +23,12 @@ private:
 	GLFWwindow* window;
 	glm::ivec2 window_size;
 
+	Shader post_proc_shader;
+	uint post_proc_fbo;
+	uint post_proc_col_buf;
+	uint vao_quad;
+	void InitPostProcFbo(glm::ivec2 framebuffer_size);
+
 	// Stuff (to be renamed)
 	TextRenderer text_renderer;
 	Player player;

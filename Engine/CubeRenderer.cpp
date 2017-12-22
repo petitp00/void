@@ -15,6 +15,7 @@ Shader CubeRenderer::gbuf_shader;
 uint CubeRenderer::gbuf;
 uint CubeRenderer::gpos;
 uint CubeRenderer::gnorm;
+uint CubeRenderer::gcolor;
 
 Shader CubeRenderer::ssao_shader;
 uint CubeRenderer::ssao_fbo;
@@ -155,7 +156,7 @@ void CubeRenderer::AddCubesToDraw(std::vector<Cube> _cubes, std::vector<HalfCube
 	hcubes.insert(hcubes.end(), _hcubes.begin(), _hcubes.end());
 }
 
-void CubeRenderer::RenderFrame(RenderInfo info)
+void CubeRenderer::RenderFrame(RenderInfo info, uint fbo)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, gbuf);
 	{
@@ -170,6 +171,7 @@ void CubeRenderer::RenderFrame(RenderInfo info)
 			glm::mat4 model = glm::translate(glm::mat4(), c.position);
 			model = glm::scale(model, c.size);
 			gbuf_shader.setMat4("model", model);
+			gbuf_shader.setVec3("color", c.mat.diffuse);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
 		cubes.clear();
@@ -183,6 +185,7 @@ void CubeRenderer::RenderFrame(RenderInfo info)
 			model = glm::rotate(model, angle_val, glm::vec3(0.f, 1.f, 0.f));
 			model = glm::scale(model, c.size);
 			gbuf_shader.setMat4("model", model);
+			gbuf_shader.setVec3("color", c.mat.diffuse);
 			glDrawArrays(GL_TRIANGLES, 0, 8 * 3);
 		}
 		hcubes.clear();
@@ -232,12 +235,15 @@ void CubeRenderer::RenderFrame(RenderInfo info)
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, gnorm);
 		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, gcolor);
+		glActiveTexture(GL_TEXTURE3);
 		glBindTexture(GL_TEXTURE_2D, ssao_blur_col_buf);
 
 		Cube c;
 		light_pass_shader.setInt("gPosition", 0);
 		light_pass_shader.setInt("gNormal", 1);
-		light_pass_shader.setInt("ssao", 2);
+		light_pass_shader.setInt("gColor", 2);
+		light_pass_shader.setInt("ssao", 3);
 		light_pass_shader.setVec3("light.position", glm::vec3(info.view * glm::vec4(info.light.position, 1)));
 		light_pass_shader.setVec3("light.ambient", info.light.ambient);
 		light_pass_shader.setVec3("light.diffuse", info.light.diffuse);
@@ -246,7 +252,7 @@ void CubeRenderer::RenderFrame(RenderInfo info)
 		light_pass_shader.setFloat("light.constant", info.light.constant);
 		light_pass_shader.setFloat("light.linear", info.light.linear);
 		light_pass_shader.setFloat("light.quadratic", info.light.quadratic);
-		light_pass_shader.setVec4("mat.diffuse", c.mat.diffuse);
+		//light_pass_shader.setVec4("mat.diffuse", c.mat.diffuse);
 		light_pass_shader.setVec4("mat.specular", c.mat.specular);
 		light_pass_shader.setFloat("mat.specular_strength", c.mat.specular_strength);
 
@@ -273,13 +279,13 @@ void CubeRenderer::RenderFrame(RenderInfo info)
 	glEnable(GL_DEPTH_TEST);
 
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, fxaa_fbo);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
 	glBlitFramebuffer(0, 0, info.framebuffer_size.x, info.framebuffer_size.y, 0, 0, info.framebuffer_size.x, info.framebuffer_size.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, gbuf);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
 	glBlitFramebuffer(0, 0, info.framebuffer_size.x, info.framebuffer_size.y, 0, 0, info.framebuffer_size.x, info.framebuffer_size.y, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 }
 
 void CubeRenderer::InitFramebuffers(glm::ivec2 framebuffer_size)
@@ -288,8 +294,8 @@ void CubeRenderer::InitFramebuffers(glm::ivec2 framebuffer_size)
 	{
 		if (gbuf != 0) {
 			glDeleteFramebuffers(1, &gbuf);
-			uint textures[] = { gpos, gnorm };
-			glDeleteTextures(2, textures);
+			uint textures[] = { gpos, gnorm, gcolor };
+			glDeleteTextures(3, textures);
 		}
 
 		glGenFramebuffers(1, &gbuf);
@@ -300,7 +306,6 @@ void CubeRenderer::InitFramebuffers(glm::ivec2 framebuffer_size)
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, framebuffer_size.x, framebuffer_size.y, 0, GL_RGB, GL_FLOAT, NULL);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glBindTexture(GL_TEXTURE_2D, 0);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gpos, 0);
 
 		glGenTextures(1, &gnorm);
@@ -310,8 +315,15 @@ void CubeRenderer::InitFramebuffers(glm::ivec2 framebuffer_size)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gnorm, 0);
 
-		uint attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
-		glDrawBuffers(2, attachments);
+		glGenTextures(1, &gcolor);
+		glBindTexture(GL_TEXTURE_2D, gcolor);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, framebuffer_size.x, framebuffer_size.y, 0, GL_RGB, GL_FLOAT, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gcolor, 0);
+
+		uint attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
+		glDrawBuffers(3, attachments);
 
 		uint rbo_depth;
 		glGenRenderbuffers(1, &rbo_depth);

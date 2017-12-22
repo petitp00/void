@@ -14,7 +14,7 @@ void main()
 	//vec4 world_pos = model * vec4(inPos, 1.0);
 	vec4 view_pos = view * model * vec4(inPos, 1.0);
 	//FragPos = world_pos.xyz;
-FragPos = view_pos.xyz;
+	FragPos = view_pos.xyz;
 	Normal = transpose(inverse(mat3(view * model))) * inNormal;
 	gl_Position = projection * view_pos;
 }
