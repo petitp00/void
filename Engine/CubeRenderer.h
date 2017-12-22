@@ -52,14 +52,39 @@ public:
 	static void RenderFrame(RenderInfo info); // clears cubes and hcubes
 
 private:
-	static void InitFramebuffer(glm::ivec2 framebuffer_size);
-
-	static uint gbuf;
-	static uint gpos, gnorm;
-	static uint vao_cube, vao_hcube, vao_quad;
-	static Shader gbuf_shader, light_pass_shader;
+	static void InitFramebuffers(glm::ivec2 framebuffer_size);
 
 	static std::vector<Cube> cubes;
 	static std::vector<HalfCube> hcubes;
+
+	static uint vao_cube, vao_hcube, vao_quad;
+
+	// geometry pass
+	static Shader gbuf_shader;
+	static uint gbuf;
+	static uint gpos, gnorm; // output textures
+
+	// ssao pass
+	static Shader ssao_shader;
+	static uint ssao_fbo;
+	static uint ssao_col_buf; // output texture
+	static uint noise_texture; // input texture
+
+	// ssao blur pass
+	static Shader ssao_blur_shader;
+	static uint ssao_blur_fbo;
+	static uint ssao_blur_col_buf; // output texture
+
+	// light pass
+	static Shader light_pass_shader;
+	static uint light_pass_fbo;
+	static uint light_pass_col_buf; // output texture
+
+	// fxaa pass
+	static Shader fxaa_shader;
+	static uint fxaa_fbo;
+	//TODO: remove vvv because not needed
+	static uint fxaa_col_buf; // output texture
+
 };
 

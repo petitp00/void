@@ -16,6 +16,9 @@
     <Filter Include="Other Files">
       <UniqueIdentifier>{7fad5bdd-29c5-4cb1-a642-aa387ea0d4aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{34b59ddf-2113-47d1-b2de-fdb12014454a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -83,5 +86,73 @@
     <ClInclude Include="CubeRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\Shaders\billboard.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\billboard.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\crosshair.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\crosshair.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\cube_gbuf.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\cube_gbuf.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\cube_lightpass.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\cube_lightpass.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\cube_ssao.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\cube_ssao.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\cube_ssao_blur.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\cube_ssao_blur.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\fxaa.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\fxaa.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\instanced_primitive.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\instanced_primitive.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\primitive.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\primitive.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\text.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\text.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\text_to_texture.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\text_to_texture.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

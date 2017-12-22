@@ -147,6 +147,30 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TextRenderer.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\Shaders\billboard.frag" />
+    <None Include="..\Resources\Shaders\billboard.vert" />
+    <None Include="..\Resources\Shaders\crosshair.frag" />
+    <None Include="..\Resources\Shaders\crosshair.vert" />
+    <None Include="..\Resources\Shaders\cube_gbuf.frag" />
+    <None Include="..\Resources\Shaders\cube_gbuf.vert" />
+    <None Include="..\Resources\Shaders\cube_lightpass.frag" />
+    <None Include="..\Resources\Shaders\cube_lightpass.vert" />
+    <None Include="..\Resources\Shaders\cube_ssao.frag" />
+    <None Include="..\Resources\Shaders\cube_ssao.vert" />
+    <None Include="..\Resources\Shaders\cube_ssao_blur.frag" />
+    <None Include="..\Resources\Shaders\cube_ssao_blur.vert" />
+    <None Include="..\Resources\Shaders\fxaa.frag" />
+    <None Include="..\Resources\Shaders\fxaa.vert" />
+    <None Include="..\Resources\Shaders\instanced_primitive.frag" />
+    <None Include="..\Resources\Shaders\instanced_primitive.vert" />
+    <None Include="..\Resources\Shaders\primitive.frag" />
+    <None Include="..\Resources\Shaders\primitive.vert" />
+    <None Include="..\Resources\Shaders\text.frag" />
+    <None Include="..\Resources\Shaders\text.vert" />
+    <None Include="..\Resources\Shaders\text_to_texture.frag" />
+    <None Include="..\Resources\Shaders\text_to_texture.vert" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

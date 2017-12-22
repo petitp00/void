@@ -4,7 +4,7 @@
 
 const float M_PI = 3.14159265358979323846f;
 
-std::string RESOURCES_FOLDER = "../Resources";
+std::string RESOURCES_FOLDER = "../Resources/";
 
 std::ostream & operator<<(std::ostream & os, const glm::vec2 v) {
 	return os << "{ " << v.x << ", " << v.y << " }";
