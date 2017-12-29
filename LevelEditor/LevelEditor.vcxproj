@@ -73,8 +73,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)Build\</OutDir>
-    <IncludePath>C:\doc\void\LevelEditor\imgui;C:\doc\void\Engine;C:\doc\void\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\doc\void\Libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)LevelEditor\imgui;$(SolutionDir)Engine;$(SolutionDir)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -82,8 +82,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)Build\</OutDir>
-    <IncludePath>C:\doc\void\LevelEditor\imgui;C:\doc\void\Engine;C:\doc\void\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\doc\void\Libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)LevelEditor\imgui;$(SolutionDir)Engine;$(SolutionDir)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>

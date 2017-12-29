@@ -73,9 +73,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)Build\</OutDir>
-    <IncludePath>C:\doc\void\Engine;C:\doc\void\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\doc\void\Libs;$(LibraryPath)</LibraryPath>
-    <SourcePath>C:\doc\void\Engine;$(SourcePath)</SourcePath>
+    <IncludePath>$(SolutionDir)Engine;$(SolutionDir)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Libs;$(LibraryPath)</LibraryPath>
+    <SourcePath>$(SolutionDir)Engine;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -83,9 +83,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)Build\</OutDir>
-    <IncludePath>C:\doc\void\Engine;C:\doc\void\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\doc\void\Libs;$(LibraryPath)</LibraryPath>
-    <SourcePath>C:\doc\void\Engine;$(SourcePath)</SourcePath>
+    <IncludePath>$(SolutionDir)Engine;$(SolutionDir)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Libs;$(LibraryPath)</LibraryPath>
+    <SourcePath>$(SolutionDir)Engine;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
